@@ -1,0 +1,11 @@
+schemas/gschemas.compiled
+dist/
+.claude
+.mcp.json
+node_modules/
+dwm/
+.vscode
+eslint.config.js
+package*.json
+.dev
+CLAUDE.md

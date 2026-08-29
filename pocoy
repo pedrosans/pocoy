@@ -1,0 +1,87 @@
+#!/bin/sh
+# Install and configure Pocoy from a source checkout.
+set -e
+cd "$(dirname "$0")"
+
+UUID=pocoy@pedrosans.github.io
+SCHEMA_ID=org.gnome.shell.extensions.pocoy
+SCHEMA=schemas/$SCHEMA_ID.gschema.xml
+DCONF_PATH=/org/gnome/shell/extensions/pocoy/
+TARGET="$HOME/.local/share/gnome-shell/extensions/$UUID"
+SOURCES="extension.js bar.js borders.js theme.js stylesheet.css metadata.json LICENSE LICENSE.dwm README.md"
+
+case "${1:-}" in
+    install)
+        case "${2:-}" in
+            disabled) ENABLE=no ;;
+            *)        ENABLE=yes ;;
+        esac
+
+        # Disabled first so gnome-shell drops the old modules before the files
+        # under them change, and enabled again once the schema is compiled.
+        gnome-extensions disable "$UUID" 2>/dev/null || true
+        mkdir -p "$TARGET/schemas"
+        cp $SOURCES "$TARGET/"
+        cp "$SCHEMA" "$TARGET/schemas/"
+        glib-compile-schemas "$TARGET/schemas"
+        if [ "$ENABLE" = yes ]; then
+            gnome-extensions enable "$UUID"
+            echo "DONE: installed in $TARGET"
+        else
+            echo "DONE: installed in $TARGET (left disabled, enable it with 'gnome-extensions enable $UUID')"
+        fi
+        ;;
+    uninstall)
+        gnome-extensions disable "$UUID" 2>/dev/null || true
+        rm -rf "$TARGET"
+        echo "DONE: removed $TARGET (settings kept, 'dconf reset -f $DCONF_PATH' clears them)"
+        ;;
+    modifier)
+        # dwm's `#define MODKEY Mod1Mask`: the key names spell out dwm's
+        # modifier list (modkey-controlmask-shiftmask-xk-1), so each binding is
+        # rebuilt from its own name. Control moves to Alt when MODKEY takes it,
+        # else MODKEY|ControlMask would collapse onto MODKEY alone.
+        case "${2:-}" in
+            alt)          MODKEY='<Alt>'     CTRLKEY='<Control>' NICK=alt ;;
+            ctrl|control) MODKEY='<Control>' CTRLKEY='<Alt>'     NICK=control ;;
+            super|win)    MODKEY='<Super>'   CTRLKEY='<Control>' NICK=super ;;
+            *)
+                echo "Usage: ./pocoy modifier <alt|ctrl|super>" >&2
+                exit 1
+                ;;
+        esac
+
+        # dconf, not gsettings: gsettings only resolves schemas under
+        # XDG_DATA_DIRS, which the extensions directory is not in. Reset first
+        # so a key since renamed in the schema doesn't keep its old value.
+        dconf reset -f "$DCONF_PATH"
+
+        # buttons[] has no accelerator to rewrite, so the mouse bindings read
+        # the modifier from this key instead. Written after the reset.
+        dconf write "${DCONF_PATH}modkey" "'$NICK'"
+
+        count=0
+        for key in $(sed -n 's/.*<key name="\(modkey-[^"]*\)".*/\1/p' "$SCHEMA"); do
+            binding=$MODKEY
+            case "$key" in *-controlmask-*) binding="$binding$CTRLKEY" ;; esac
+            case "$key" in *-shiftmask-*) binding="$binding<Shift>" ;; esac
+
+            # gschema key names are lowercase-only, but keysyms are not
+            xk=${key##*-xk-}
+            case "$xk" in return) xk=Return ;; esac
+
+            dconf write "$DCONF_PATH$key" "['$binding$xk']"
+            count=$((count + 1))
+        done
+        echo "DONE: MODKEY = $MODKEY ($count keys)"
+        ;;
+    *)
+        echo "Usage: ./pocoy <command>" >&2
+        echo >&2
+        echo "  install [disabled]          copy the extension to $TARGET and enable it," >&2
+        echo "                              or leave it disabled with 'disabled'" >&2
+        echo "  uninstall                   disable the extension and remove those files" >&2
+        echo "  modifier <alt|ctrl|super>   rebind every shortcut to another MODKEY" >&2
+        exit 1
+        ;;
+esac

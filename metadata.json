@@ -1,0 +1,9 @@
+{
+  "uuid": "pocoy@pedrosans.github.io",
+  "name": "Pocoy",
+  "description": "A dwm-like dynamic tiling window manager for GNOME Shell.\n\nWindows are tiled automatically and organised with dwm's tag system instead of workspaces. Four layouts are available: tile, monocle, flow and floating. A dwm-style bar replaces the top panel, showing the tags, the layout symbol and the focused window title.\n\nKeyboard shortcuts follow dwm's defaults and use Alt as the modifier key. All of them can be changed with dconf-editor under /org/gnome/shell/extensions/pocoy/.",
+  "shell-version": ["46"],
+  "url": "https://github.com/pedrosans/pocoy",
+  "settings-schema": "org.gnome.shell.extensions.pocoy",
+  "version": 1
+}

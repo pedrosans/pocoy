@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+
+  <enum id="org.gnome.shell.extensions.pocoy.modkey">
+    <value nick="alt" value="0"/>
+    <value nick="control" value="1"/>
+    <value nick="super" value="2"/>
+  </enum>
+
+  <schema id="org.gnome.shell.extensions.pocoy" path="/org/gnome/shell/extensions/pocoy/">
+
+    <!-- Key names mirror dwm's config.def.h keys[] table, where MODKEY is Mod1Mask (Alt):
+
+         modifier                        key         function        argument
+         MODKEY,                         XK_Return,  zoom,           {0}
+         MODKEY|ShiftMask,               XK_Return,  spawn,          {.v = termcmd}
+         MODKEY,                         XK_j,       focusstack,     {.i = +1}
+         MODKEY,                         XK_k,       focusstack,     {.i = -1}
+         MODKEY|ShiftMask,               XK_j,       pushstack,      {.i = +1}
+         MODKEY|ShiftMask,               XK_k,       pushstack,      {.i = -1}
+         MODKEY,                         XK_t,       setlayout,      {.v = &layouts[0]}
+         MODKEY,                         XK_m,       setlayout,      {.v = &layouts[2]}
+         MODKEY,                         XK_0,       view,           {.ui = ~0}
+         MODKEY|ShiftMask,               XK_0,       tag,            {.ui = ~0}
+         TAGKEYS(                        XK_N,                       N-1)
+
+         and TAGKEYS(KEY, TAG) expands to:
+
+         MODKEY,                         KEY,        view,           {.ui = 1 << TAG}
+         MODKEY|ControlMask,             KEY,        toggleview,     {.ui = 1 << TAG}
+         MODKEY|ShiftMask,               KEY,        tag,            {.ui = 1 << TAG}
+         MODKEY|ControlMask|ShiftMask,   KEY,        toggletag,      {.ui = 1 << TAG}
+    -->
+
+    <key name="modkey-xk-return" type="as">
+      <default>["&lt;Alt&gt;Return"]</default>
+      <summary>Zoom</summary>
+      <description>Move the focused window to the top of the master area.</description>
+    </key>
+
+    <key name="modkey-shiftmask-xk-return" type="as">
+      <default>["&lt;Alt&gt;&lt;Shift&gt;Return"]</default>
+      <summary>Spawn terminal</summary>
+      <description>Focus the terminal, launching it if it is not running.</description>
+    </key>
+
+    <key name="modkey-xk-j" type="as">
+      <default>["&lt;Alt&gt;j"]</default>
+      <summary>Focus next window</summary>
+      <description>Move focus to the next window in the stack.</description>
+    </key>
+
+    <key name="modkey-xk-k" type="as">
+      <default>["&lt;Alt&gt;k"]</default>
+      <summary>Focus previous window</summary>
+      <description>Move focus to the previous window in the stack.</description>
+    </key>
+
+    <key name="modkey-shiftmask-xk-j" type="as">
+      <default>["&lt;Alt&gt;&lt;Shift&gt;j"]</default>
+      <summary>Push window down the stack</summary>
+      <description>Swap the focused window with the next one in the stack.</description>
+    </key>
+
+    <key name="modkey-shiftmask-xk-k" type="as">
+      <default>["&lt;Alt&gt;&lt;Shift&gt;k"]</default>
+      <summary>Push window up the stack</summary>
+      <description>Swap the focused window with the previous one in the stack.</description>
+    </key>
+
+    <key name="modkey-xk-t" type="as">
+      <default>["&lt;Alt&gt;t"]</default>
+      <summary>Set tile layout</summary>
+      <description>Split the screen into a master area and a stack.</description>
+    </key>
+
+    <key name="modkey-xk-m" type="as">
+      <default>["&lt;Alt&gt;m"]</default>
+      <summary>Set monocle layout</summary>
+      <description>Stack every visible window on top of each other, full size.</description>
+    </key>
+
+    <key name="modkey-xk-u" type="as">
+      <default>["&lt;Alt&gt;u"]</default>
+      <summary>Set flow layout</summary>
+      <description>Center the master area with the stack split to either side.</description>
+    </key>
+
+    <key name="modkey-xk-0" type="as">
+      <default>["&lt;Alt&gt;0"]</default>
+      <summary>View every tag</summary>
+      <description>Show the windows of all tags at once.</description>
+    </key>
+
+    <key name="modkey-shiftmask-xk-0" type="as">
+      <default>["&lt;Alt&gt;&lt;Shift&gt;0"]</default>
+      <summary>Apply every tag to the window</summary>
+      <description>Make the focused window visible under all tags.</description>
+    </key>
+
+    <key name="modkey-xk-1" type="as">
+      <default>["&lt;Alt&gt;1"]</default>
+      <summary>View tag 1</summary>
+      <description>Show only the windows tagged with 1.</description>
+    </key>
+
+    <key name="modkey-controlmask-xk-1" type="as">
+      <default>["&lt;Alt&gt;&lt;Control&gt;1"]</default>
+      <summary>Toggle tag 1 in the view</summary>
+      <description>Add or remove tag 1 from the set of tags being viewed.</description>
+    </key>
+
+    <key name="modkey-shiftmask-xk-1" type="as">
+      <default>["&lt;Alt&gt;&lt;Shift&gt;1"]</default>
+      <summary>Move window to tag 1</summary>
+      <description>Apply tag 1 to the focused window, replacing its current tags.</description>
+    </key>
+
+    <key name="modkey-controlmask-shiftmask-xk-1" type="as">
+      <default>["&lt;Alt&gt;&lt;Control&gt;&lt;Shift&gt;1"]</default>
+      <summary>Toggle tag 1 on the window</summary>
+      <description>Add or remove tag 1 from the focused window.</description>
+    </key>
+
+    <key name="modkey-xk-2" type="as">
+      <default>["&lt;Alt&gt;2"]</default>
+      <summary>View tag 2</summary>
+      <description>Show only the windows tagged with 2.</description>
+    </key>
+
+    <key name="modkey-controlmask-xk-2" type="as">
+      <default>["&lt;Alt&gt;&lt;Control&gt;2"]</default>
+      <summary>Toggle tag 2 in the view</summary>
+      <description>Add or remove tag 2 from the set of tags being viewed.</description>
+    </key>
+
+    <key name="modkey-shiftmask-xk-2" type="as">
+      <default>["&lt;Alt&gt;&lt;Shift&gt;2"]</default>
+      <summary>Move window to tag 2</summary>
+      <description>Apply tag 2 to the focused window, replacing its current tags.</description>
+    </key>
+
+    <key name="modkey-controlmask-shiftmask-xk-2" type="as">
+      <default>["&lt;Alt&gt;&lt;Control&gt;&lt;Shift&gt;2"]</default>
+      <summary>Toggle tag 2 on the window</summary>
+      <description>Add or remove tag 2 from the focused window.</description>
+    </key>
+
+    <key name="modkey-xk-3" type="as">
+      <default>["&lt;Alt&gt;3"]</default>
+      <summary>View tag 3</summary>
+      <description>Show only the windows tagged with 3.</description>
+    </key>
+
+    <key name="modkey-controlmask-xk-3" type="as">
+      <default>["&lt;Alt&gt;&lt;Control&gt;3"]</default>
+      <summary>Toggle tag 3 in the view</summary>
+      <description>Add or remove tag 3 from the set of tags being viewed.</description>
+    </key>
+
+    <key name="modkey-shiftmask-xk-3" type="as">
+      <default>["&lt;Alt&gt;&lt;Shift&gt;3"]</default>
+      <summary>Move window to tag 3</summary>
+      <description>Apply tag 3 to the focused window, replacing its current tags.</description>
+    </key>
+
+    <key name="modkey-controlmask-shiftmask-xk-3" type="as">
+      <default>["&lt;Alt&gt;&lt;Control&gt;&lt;Shift&gt;3"]</default>
+      <summary>Toggle tag 3 on the window</summary>
+      <description>Add or remove tag 3 from the focused window.</description>
+    </key>
+
+    <key name="modkey-xk-4" type="as">
+      <default>["&lt;Alt&gt;4"]</default>
+      <summary>View tag 4</summary>
+      <description>Show only the windows tagged with 4.</description>
+    </key>
+
+    <key name="modkey-controlmask-xk-4" type="as">
+      <default>["&lt;Alt&gt;&lt;Control&gt;4"]</default>
+      <summary>Toggle tag 4 in the view</summary>
+      <description>Add or remove tag 4 from the set of tags being viewed.</description>
+    </key>
+
+    <key name="modkey-shiftmask-xk-4" type="as">
+      <default>["&lt;Alt&gt;&lt;Shift&gt;4"]</default>
+      <summary>Move window to tag 4</summary>
+      <description>Apply tag 4 to the focused window, replacing its current tags.</description>
+    </key>
+
+    <key name="modkey-controlmask-shiftmask-xk-4" type="as">
+      <default>["&lt;Alt&gt;&lt;Control&gt;&lt;Shift&gt;4"]</default>
+      <summary>Toggle tag 4 on the window</summary>
+      <description>Add or remove tag 4 from the focused window.</description>
+    </key>
+
+    <key name="modkey-xk-5" type="as">
+      <default>["&lt;Alt&gt;5"]</default>
+      <summary>View tag 5</summary>
+      <description>Show only the windows tagged with 5.</description>
+    </key>
+
+    <key name="modkey-controlmask-xk-5" type="as">
+      <default>["&lt;Alt&gt;&lt;Control&gt;5"]</default>
+      <summary>Toggle tag 5 in the view</summary>
+      <description>Add or remove tag 5 from the set of tags being viewed.</description>
+    </key>
+
+    <key name="modkey-shiftmask-xk-5" type="as">
+      <default>["&lt;Alt&gt;&lt;Shift&gt;5"]</default>
+      <summary>Move window to tag 5</summary>
+      <description>Apply tag 5 to the focused window, replacing its current tags.</description>
+    </key>
+
+    <key name="modkey-controlmask-shiftmask-xk-5" type="as">
+      <default>["&lt;Alt&gt;&lt;Control&gt;&lt;Shift&gt;5"]</default>
+      <summary>Toggle tag 5 on the window</summary>
+      <description>Add or remove tag 5 from the focused window.</description>
+    </key>
+
+    <key name="modkey-xk-6" type="as">
+      <default>["&lt;Alt&gt;6"]</default>
+      <summary>View tag 6</summary>
+      <description>Show only the windows tagged with 6.</description>
+    </key>
+
+    <key name="modkey-controlmask-xk-6" type="as">
+      <default>["&lt;Alt&gt;&lt;Control&gt;6"]</default>
+      <summary>Toggle tag 6 in the view</summary>
+      <description>Add or remove tag 6 from the set of tags being viewed.</description>
+    </key>
+
+    <key name="modkey-shiftmask-xk-6" type="as">
+      <default>["&lt;Alt&gt;&lt;Shift&gt;6"]</default>
+      <summary>Move window to tag 6</summary>
+      <description>Apply tag 6 to the focused window, replacing its current tags.</description>
+    </key>
+
+    <key name="modkey-controlmask-shiftmask-xk-6" type="as">
+      <default>["&lt;Alt&gt;&lt;Control&gt;&lt;Shift&gt;6"]</default>
+      <summary>Toggle tag 6 on the window</summary>
+      <description>Add or remove tag 6 from the focused window.</description>
+    </key>
+
+    <key name="modkey-xk-7" type="as">
+      <default>["&lt;Alt&gt;7"]</default>
+      <summary>View tag 7</summary>
+      <description>Show only the windows tagged with 7.</description>
+    </key>
+
+    <key name="modkey-controlmask-xk-7" type="as">
+      <default>["&lt;Alt&gt;&lt;Control&gt;7"]</default>
+      <summary>Toggle tag 7 in the view</summary>
+      <description>Add or remove tag 7 from the set of tags being viewed.</description>
+    </key>
+
+    <key name="modkey-shiftmask-xk-7" type="as">
+      <default>["&lt;Alt&gt;&lt;Shift&gt;7"]</default>
+      <summary>Move window to tag 7</summary>
+      <description>Apply tag 7 to the focused window, replacing its current tags.</description>
+    </key>
+
+    <key name="modkey-controlmask-shiftmask-xk-7" type="as">
+      <default>["&lt;Alt&gt;&lt;Control&gt;&lt;Shift&gt;7"]</default>
+      <summary>Toggle tag 7 on the window</summary>
+      <description>Add or remove tag 7 from the focused window.</description>
+    </key>
+
+    <key name="modkey-xk-8" type="as">
+      <default>["&lt;Alt&gt;8"]</default>
+      <summary>View tag 8</summary>
+      <description>Show only the windows tagged with 8.</description>
+    </key>
+
+    <key name="modkey-controlmask-xk-8" type="as">
+      <default>["&lt;Alt&gt;&lt;Control&gt;8"]</default>
+      <summary>Toggle tag 8 in the view</summary>
+      <description>Add or remove tag 8 from the set of tags being viewed.</description>
+    </key>
+
+    <key name="modkey-shiftmask-xk-8" type="as">
+      <default>["&lt;Alt&gt;&lt;Shift&gt;8"]</default>
+      <summary>Move window to tag 8</summary>
+      <description>Apply tag 8 to the focused window, replacing its current tags.</description>
+    </key>
+
+    <key name="modkey-controlmask-shiftmask-xk-8" type="as">
+      <default>["&lt;Alt&gt;&lt;Control&gt;&lt;Shift&gt;8"]</default>
+      <summary>Toggle tag 8 on the window</summary>
+      <description>Add or remove tag 8 from the focused window.</description>
+    </key>
+
+    <key name="modkey-xk-9" type="as">
+      <default>["&lt;Alt&gt;9"]</default>
+      <summary>View tag 9</summary>
+      <description>Show only the windows tagged with 9.</description>
+    </key>
+
+    <key name="modkey-controlmask-xk-9" type="as">
+      <default>["&lt;Alt&gt;&lt;Control&gt;9"]</default>
+      <summary>Toggle tag 9 in the view</summary>
+      <description>Add or remove tag 9 from the set of tags being viewed.</description>
+    </key>
+
+    <key name="modkey-shiftmask-xk-9" type="as">
+      <default>["&lt;Alt&gt;&lt;Shift&gt;9"]</default>
+      <summary>Move window to tag 9</summary>
+      <description>Apply tag 9 to the focused window, replacing its current tags.</description>
+    </key>
+
+    <key name="modkey-controlmask-shiftmask-xk-9" type="as">
+      <default>["&lt;Alt&gt;&lt;Control&gt;&lt;Shift&gt;9"]</default>
+      <summary>Toggle tag 9 on the window</summary>
+      <description>Add or remove tag 9 from the focused window.</description>
+    </key>
+
+    <!-- dwm recompiles to change `#define MODKEY Mod1Mask`; here the keys[]
+         bindings above already carry their modifier in the accelerator, so this
+         only holds the one buttons[] still needs at runtime: the bit tested
+         against the mouse event state. Named without a dash so the
+         `modkey-*` loop in .util does not pick it up as a binding. -->
+    <key name="modkey" enum="org.gnome.shell.extensions.pocoy.modkey">
+      <default>'alt'</default>
+      <summary>Modifier for the mouse bindings</summary>
+      <description>Modifier held while clicking the bar, matching dwm's MODKEY in buttons[].</description>
+    </key>
+
+  </schema>
+</schemalist>

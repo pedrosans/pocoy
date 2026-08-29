@@ -1,0 +1,78 @@
+/* This file is the source of truth for colors, font and border size.
+ *
+ * It stands in for dwm's colors[][], fonts[] and borderpx in config.def.h, and
+ * those values live here and nowhere else. GNOME applies this stylesheet to the
+ * panel, and theme.js parses the declarations below back out for the bar, which
+ * is painted with Cairo, and for the window borders, which are sized in code —
+ * so editing a value here reaches both. */
+.dwm-panel {
+    font-family: monospace;
+    font-size: 10pt;
+
+    border-top: 0;
+    border-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+
+    border-radius: 0;
+    border: none;
+    border-width: 0;
+    outline: none;
+    box-shadow: none;
+    background-image: none;
+}
+.selected-dwm-panel {
+    color: #eeeeee; /* Text in dwm's selected panel */
+    background-color: #005577; /* Background in dwm's selected panel */
+}
+
+.normal-dwm-panel {
+    color: #bbbbbb; /* Text in dwm's normal panel */
+    background-color: #222222; /* Background in dwm's normal panel */
+}
+
+.highlight-border {
+    border: 1px solid #005577;
+    border-radius: 0px;
+}
+.normal-border {
+    border: 1px solid #444444; /* dwm's normal border color */
+    border-radius: 0px;
+}
+.normal-background {
+    background-color: #444444;
+}
+
+.h10 { min-height: 10px; max-height: 10px; height: 10px; }
+.h11 { min-height: 11px; max-height: 11px; height: 11px; }
+.h12 { min-height: 12px; max-height: 12px; height: 12px; }
+.h13 { min-height: 13px; max-height: 13px; height: 13px; }
+.h14 { min-height: 14px; max-height: 14px; height: 14px; }
+.h15 { min-height: 15px; max-height: 15px; height: 15px; }
+.h16 { min-height: 16px; max-height: 16px; height: 16px; }
+.h17 { min-height: 17px; max-height: 17px; height: 17px; }
+.h18 { min-height: 18px; max-height: 18px; height: 18px; }
+.h19 { min-height: 19px; max-height: 19px; height: 19px; }
+.h20 { min-height: 20px; max-height: 20px; height: 20px; }
+.h21 { min-height: 21px; max-height: 21px; height: 21px; }
+.h22 { min-height: 22px; max-height: 22px; height: 22px; }
+.h23 { min-height: 23px; max-height: 23px; height: 23px; }
+.h24 { min-height: 24px; max-height: 24px; height: 24px; }
+.h25 { min-height: 25px; max-height: 25px; height: 25px; }
+.h26 { min-height: 26px; max-height: 26px; height: 26px; }
+.h27 { min-height: 27px; max-height: 27px; height: 27px; }
+.h28 { min-height: 28px; max-height: 28px; height: 28px; }
+.h29 { min-height: 29px; max-height: 29px; height: 29px; }
+.h30 { min-height: 30px; max-height: 30px; height: 30px; }
+.h31 { min-height: 31px; max-height: 31px; height: 31px; }
+.h32 { min-height: 32px; max-height: 32px; height: 32px; }
+.h33 { min-height: 33px; max-height: 33px; height: 33px; }
+.h34 { min-height: 34px; max-height: 34px; height: 34px; }
+.h35 { min-height: 35px; max-height: 35px; height: 35px; }
+.h36 { min-height: 36px; max-height: 36px; height: 36px; }
+.h37 { min-height: 37px; max-height: 37px; height: 37px; }
+.h38 { min-height: 38px; max-height: 38px; height: 38px; }
+.h39 { min-height: 39px; max-height: 39px; height: 39px; }
+.h40 { min-height: 40px; max-height: 40px; height: 40px; }
