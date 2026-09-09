@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Highlight Focus.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Adapted for Pocoy by Pedro Santos, 2026.
+ * Adapted for pocoy by Pedro Santos, 2026.
  *
  * SPDX-License-Identifier: GPL-3.0-only
  */

@@ -1,5 +1,5 @@
 #!/bin/sh
-# Install and configure Pocoy from a source checkout.
+# Install and configure pocoy from a source checkout.
 set -e
 cd "$(dirname "$0")"
 

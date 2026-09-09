@@ -1,4 +1,4 @@
-/* Pocoy - a dwm-like tiling window manager for GNOME Shell
+/* pocoy - a dwm-like tiling window manager for GNOME Shell
  *
  * Copyright (C) 2026 Pedro Santos
  *

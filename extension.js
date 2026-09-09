@@ -1,4 +1,4 @@
-/* Pocoy - a dwm-like tiling window manager for GNOME Shell
+/* pocoy - a dwm-like tiling window manager for GNOME Shell
  *
  * Copyright (C) 2026 Pedro Santos
  *
@@ -170,7 +170,7 @@ const winhandler = [
 
 /*
  * Colors, font and border width are deliberately NOT here. dwm declares them in
- * config.def.h as colors[][], fonts[] and borderpx; in Pocoy they live in
+ * config.def.h as colors[][], fonts[] and borderpx; in pocoy they live in
  * stylesheet.css, which is the source of truth for all three.
  *
  *   dwm config.def.h                  stylesheet.css

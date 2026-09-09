@@ -1,4 +1,4 @@
-# Pocoy
+# pocoy
 
 A dwm-like dynamic tiling window manager for GNOME Shell.
 
@@ -19,7 +19,7 @@ layout symbol and the focused window title.
 
 ## dwm patches
 
-Pocoy carries the behaviour of these dwm patches:
+pocoy carries the behaviour of these dwm patches:
 
 - [pertag](https://dwm.suckless.org/patches/pertag/) — layout, `mfact` and
   `nmaster` are remembered per tag
@@ -71,7 +71,7 @@ The bar follows dwm's `buttons[]` table:
 ## Appearance
 
 `stylesheet.css` is the **source of truth** for colors, font and border width.
-dwm declares these in `config.def.h`; Pocoy keeps them in the stylesheet and
+dwm declares these in `config.def.h`; pocoy keeps them in the stylesheet and
 nowhere else, so there is a single place to edit and nothing to keep in sync:
 
 | dwm `config.def.h`          | `stylesheet.css`                                |
@@ -97,7 +97,7 @@ dconf write /org/gnome/shell/extensions/pocoy/modkey-xk-return "['<Super>Return'
 ./pocoy modifier alt/ctrl/super   # rebind every shortcut to another MODKEY
 ```
 
-## What Pocoy does not do
+## What pocoy does not do
 
 **One monitor.** Everything is arranged on the primary monitor's work area.
 There is a single `selmon`, dwm's `focusmon` and `tagmon` are not implemented,
@@ -111,7 +111,7 @@ left alone.
 
 ## License
 
-Pocoy is free software, distributed under the terms of the GNU General Public
+pocoy is free software, distributed under the terms of the GNU General Public
 License version 3 or later. See [LICENSE](LICENSE).
 
 `extension.js` and `bar.js` are derived from [dwm](https://dwm.suckless.org),
