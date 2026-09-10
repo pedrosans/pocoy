@@ -766,9 +766,10 @@ function updategeom() {
     if (!selmon)
         selmon = createmon();
 
-    const workArea = global.workspace_manager
-        .get_active_workspace()
-        .get_work_area_for_monitor(Main.layoutManager.primaryMonitor.index);
+    const primary = Main.layoutManager.primaryMonitor;
+    const workArea = primary
+        ? global.workspace_manager.get_active_workspace().get_work_area_for_monitor(primary.index)
+        : {x: 0, y: 0, width: global.screen_width, height: global.screen_height}; /* default monitor setup */
 
     if (selmon.wx !== workArea.x || selmon.wy !== workArea.y ||
         selmon.ww !== workArea.width || selmon.wh !== workArea.height) {
