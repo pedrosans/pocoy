@@ -513,9 +513,12 @@ function manage(c) {
     }
 }
 
-function maprequest(_display, win) {
+function maprequest(display, win) {
     if (wintoclient(win))
         arrange(selmon);
+    else if (ISCLIENT(win) && win.is_hidden())
+        win.connectObject('shown', benedic(maprequest, display),
+            'unmanaged', benedic(unmanage), extension);
 }
 
 function maximizenotify() {
@@ -597,16 +600,20 @@ function savestate() {
 }
 
 function scan() {
-    const ids = global.get_window_actors().map(actor => actor.meta_window).filter(ISCLIENT).map(w => w.get_id());
+    const wins = global.get_window_actors().map(actor => actor.meta_window).filter(ISCLIENT);
+    const ids = wins.map(w => w.get_id());
     const next = [];
     selmon.sel = null;
 
     selmon.clients.filter(c => ids.includes(c.id)).forEach(c => next.push(c));
     selmon.pertag.sel = selmon.pertag.sel.map(c => c && ids.includes(c.id) ? c : null);
 
-    for (const id of ids) {
+    for (const win of wins) {
+        const id = win.get_id();
         let c = next.find(client => client.id === id);
         if (!c) {
+            if (win.is_hidden() && !win.minimized)
+                continue;
             c = new Client(id);
             next.unshift(c);
             manage(c);
