@@ -224,7 +224,6 @@ const MODMASKS = {
 const MODKEY = () => MODMASKS[extension.getSettings().get_string('modkey')] ?? MODMASKS.alt;
 
 const TAGKEYS = (KEY, TAG) => [
-    /* modifier                            function    argument */
     [`modkey-${KEY}`,                       view,       1 << TAG],
     [`modkey-controlmask-${KEY}`,           toggleview, 1 << TAG],
     [`modkey-shiftmask-${KEY}`,             tag,        1 << TAG],
@@ -260,15 +259,15 @@ const keys = [
 
 /* button definitions */
 const buttons = [
-    /* click                 event mask     button           function                 argument */
-    {click: ClkLtSymbol,   mask: 0,      button: Button1, fn: setlayout,           arg: null},
-    {click: ClkLtSymbol,   mask: 0,      button: Button3, fn: setlayout,           arg: layouts[2]},
-    {click: ClkWinTitle,   mask: 0,      button: Button2, fn: zoom,                arg: null},
-    {click: ClkTagBar,     mask: 0,      button: Button1, fn: view,                arg: null},
-    {click: ClkTagBar,     mask: 0,      button: Button3, fn: toggleview,          arg: null},
-    {click: ClkTagBar,     mask: MODKEY, button: Button1, fn: tag,                 arg: null},
-    {click: ClkTagBar,     mask: MODKEY, button: Button3, fn: toggletag,           arg: null},
-    {click: ClkStatusText, mask: 0,      button: Button1, fn: toggleNotifications, arg: null},
+    /* click          event mask  button    function             argument */
+    [ClkLtSymbol,     0,          Button1,  setlayout,           null],
+    [ClkLtSymbol,     0,          Button3,  setlayout,           layouts[2]],
+    [ClkWinTitle,     0,          Button2,  zoom,                null],
+    [ClkTagBar,       0,          Button1,  view,                null],
+    [ClkTagBar,       0,          Button3,  toggleview,          null],
+    [ClkTagBar,       MODKEY,     Button1,  tag,                 null],
+    [ClkTagBar,       MODKEY,     Button3,  toggletag,           null],
+    [ClkStatusText,   0,          Button1,  toggleNotifications, null],
 ];
 
 function applyrules(c) {
@@ -318,9 +317,9 @@ function benedic(fn, ...bound) {
 
 function buttonpress(click, arg, event) {
     const held = event.get_state() & CLEANMASK;
-    for (const b of buttons)
-        if (click === b.click && held === (b.mask ? b.mask() : 0) && event.get_button() === b.button) {
-            benedic(b.fn, b.arg ?? arg)();
+    for (const [c, mask, button, fn, a] of buttons)
+        if (click === c && held === (mask ? mask() : 0) && event.get_button() === button) {
+            benedic(fn, a ?? arg)();
             return true;
         }
     return false;
